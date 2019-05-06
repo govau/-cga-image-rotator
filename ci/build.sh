@@ -18,4 +18,4 @@ go install github.com/govau/cga-image-rotator
 mkdir -p "${ORIG_PWD}/build"
 cp "${GOPATH}/bin/cga-image-rotator" "${ORIG_PWD}/build/cga-image-rotator"
 cp "${ORIG_PWD}/src/manifest.yml" "${ORIG_PWD}/build/manifest.yml"
-cp -R "${ORIG_PWD}/src/assets/*" "${ORIG_PWD}/build/"
+cp -R ${ORIG_PWD}/src/assets/* "${ORIG_PWD}/build/"
