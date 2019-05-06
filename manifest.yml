@@ -1,0 +1,13 @@
+
+applications:
+- name: image-rotator
+  buildpacks: [binary_buildpack]
+  command: ./cga-image-rotator
+  disk_quota: 64M
+  memory: 64M
+  instances: 2
+  env:
+    EXTENSION: "png"
+    MIMETYPE: "image/png"
+    TTL: "3600"
+    ALLOWED_NAMES: "lock,wallpaper"
