@@ -21,4 +21,4 @@ cp "${ORIG_PWD}/src/manifest.yml" "${ORIG_PWD}/build/manifest.yml"
 cp -R ${ORIG_PWD}/src/assets/* "${ORIG_PWD}/build/"
 
 # Print it out
-find "${ORIG_PWD}/build" --ls
+find "${ORIG_PWD}/build" -ls
