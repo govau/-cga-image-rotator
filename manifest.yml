@@ -10,4 +10,4 @@ applications:
     EXTENSION: "png"
     MIMETYPE: "image/png"
     TTL: "3600"
-    ALLOWED_NAMES: "lock,wallpaper"
+    ALLOWED_NAMES: "lock,wallpaper,dtadesktop,meetingroom"

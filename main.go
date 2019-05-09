@@ -21,7 +21,8 @@ type imageHandler struct {
 	MIME      string
 	TTL       int64 // seconds
 
-	data [][]byte
+	data       [][]byte
+	zippedData [][]byte
 }
 
 func (ih *imageHandler) CreateHandler() (http.HandlerFunc, error) {
@@ -49,7 +50,8 @@ func (ih *imageHandler) CreateHandler() (http.HandlerFunc, error) {
 			if err != nil {
 				return nil, err
 			}
-			ih.data = append(ih.data, buf.Bytes())
+			ih.zippedData = append(ih.zippedData, buf.Bytes())
+			ih.data = append(ih.data, bs)
 		}
 	}
 	if len(ih.data) == 0 {
@@ -64,10 +66,15 @@ func (ih *imageHandler) handleIt(w http.ResponseWriter, r *http.Request) {
 	maxAge := (((now / ih.TTL) + 1) * ih.TTL) - now
 
 	w.Header().Set("Content-Type", ih.MIME)
-	w.Header().Set("Content-Encoding", "gzip")
-	w.Header().Set("Content-Length", strconv.Itoa(len(ih.data[idxToServe])))
 	w.Header().Set("Cache-Control", "public, max-age="+strconv.Itoa(int(maxAge)))
-	w.Write(ih.data[idxToServe])
+
+	b := ih.data[idxToServe]
+	if strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+		w.Header().Set("Content-Encoding", "gzip")
+		b = ih.zippedData[idxToServe]
+	}
+	w.Header().Set("Content-Length", strconv.Itoa(len(b)))
+	w.Write(b)
 }
 
 func main() {
